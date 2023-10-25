@@ -25,7 +25,7 @@ export function parseOptions(cb: (opts: SvelteCheckCliOptions) => any) {
         )
         .option(
             '--output',
-            'What output format to use. Options are human, human-verbose, machine, machine-verbose.',
+            'What output format to use. Options are human, human-verbose, human-quiet, machine, machine-verbose, machine-quiet.',
             'human-verbose'
         )
         .option(
@@ -86,7 +86,7 @@ export function parseOptions(cb: (opts: SvelteCheckCliOptions) => any) {
     });
 }
 
-const outputFormats = ['human', 'human-verbose', 'machine', 'machine-verbose'] as const;
+const outputFormats = ['human', 'human-verbose', 'human-quiet', 'machine', 'machine-verbose', 'machine-quiet'] as const;
 type OutputFormat = (typeof outputFormats)[number];
 
 function getOutputFormat(opts: Record<string, any>): OutputFormat {
