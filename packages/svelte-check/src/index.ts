@@ -149,6 +149,8 @@ class DiagnosticsWatcher {
 }
 
 function createFilter(opts: SvelteCheckCliOptions): DiagnosticFilter {
+    if (opts.outputFormat === 'human-quiet' || opts.outputFormat === 'machine-quiet')
+        return () => false;
     switch (opts.threshold) {
         case 'error':
             return (d) => d.severity === DiagnosticSeverity.Error;
@@ -164,7 +166,7 @@ function createFilter(opts: SvelteCheckCliOptions): DiagnosticFilter {
 function instantiateWriter(opts: SvelteCheckCliOptions): Writer {
     const filter = createFilter(opts);
 
-    if (opts.outputFormat === 'human-verbose' || opts.outputFormat === 'human') {
+    if (opts.outputFormat === 'human-verbose' || opts.outputFormat === 'human' || opts.outputFormat === 'human-quiet') {
         return new HumanFriendlyWriter(
             process.stdout,
             opts.outputFormat === 'human-verbose',
